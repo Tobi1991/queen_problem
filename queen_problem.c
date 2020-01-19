@@ -176,33 +176,34 @@ int simulate(int *a, int i, int n, int length, field f){
 		// Anfang Hauptteil
 		int k=0;
 		for (k; k<8; k++){
-		coordinates coords = {k, *(a + k)};		
-		if (f.field[coords.y][coords.x] == 1) {k=9; break;}	// Gehe zur nächsten Permutation über, wenn ein Feld schon angegriffen wird
-		f = setCartFigure(coords, f);		
-
+		  coordinates coords = {k, *(a + k)};		
+		  if (f.field[coords.y][coords.x] == 1) {
+        k=9; 
+        break;
+    }	// Gehe zur nächsten Permutation über, wenn ein Feld schon angegriffen wird
+		  f = setCartFigure(coords, f);
 		}
 		// Ende Hauptteil
 		
 		if ((test(f, a, length) == 1) && (k == 8)){// die for-Schleife wurde nicht unterbrochen
 			count_res++;
 			printField(f);
-		}
-			
+		}			
 		
 		count_all++;
 		if ((count_all % 2500) == 0){
-		// printf("Es wurden %d Möglichkeiten untersucht\n", count_all);
+		  printf("Es wurden %d Möglichkeiten untersucht\n", count_all);
 		}		
 
 	} else {
 
 		for (j = i; j<=n; j++){
-			swap((a+i), (a+j));
+			swap(a+i, a+j);
 			f = initializeField(f);
 			simulate(a, i+1, n, length, f);
-			swap((a+i), (a+j));	// backtrack
-				}
-		}
+			swap(a+i, a+j);	// backtrack
+			}
+  }
 return 0;
 }
 
@@ -211,11 +212,8 @@ int main(){
 
 	field f;
 	f = initializeField(f);
-	int array[] = {1, 2, 3, 4, 5, 6, 7, 8};
+	int array[] = {0, 1, 2, 3, 4, 5, 6, 7};
 	simulate(array, 0, 7, 8, f);
 	printf("Es wurden %d Resultate gefunden\n", count_res);
 	return 0;
-
 }
-
-
